@@ -39,9 +39,10 @@ class HomePage extends ConsumerWidget {
         SliverAppBar(
           systemOverlayStyle: const SystemUiOverlayStyle(
               statusBarBrightness: Brightness.dark,
+              statusBarIconBrightness: Brightness.dark,
               statusBarColor: Colors.white),
           toolbarHeight: 100,
-          backgroundColor: Colors.white,
+          backgroundColor: !isDark ? Colors.white : Colors.grey.shade800,
           leading: const Icon(
             Icons.menu,
             color: Colors.grey,
@@ -50,11 +51,13 @@ class HomePage extends ConsumerWidget {
             IconButton(
                 onPressed: () {
                   ref.read(Controller.themControllerProvider.notifier).state =
-                      true;
+                      !isDark ? true : false;
                 },
-                icon: Icon(isDark ? Icons.dark_mode : Icons.sunny))
+                icon: Icon(
+                  !isDark ? Icons.dark_mode : Icons.sunny,
+                  color: Colors.grey,
+                ))
           ],
-        
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

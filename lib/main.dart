@@ -8,18 +8,21 @@ void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(Controller.themControllerProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Food order UI',
       theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
           textTheme: GoogleFonts.aBeeZeeTextTheme(),
-          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red)),
+          colorScheme: ColorScheme.fromSwatch(
+              primarySwatch: Colors.red,
+              brightness: !themeMode ? Brightness.light : Brightness.dark)),
       home: const AppRootPage(),
     );
   }
