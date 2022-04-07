@@ -6,20 +6,17 @@ import 'package:food_order_ui/menu.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:food_order_ui/product.dart';
 import 'package:food_order_ui/product_tile.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'controller.dart';
 
-class AppRootPage extends StatefulWidget {
+class AppRootPage extends HookConsumerWidget {
   const AppRootPage({Key? key}) : super(key: key);
-  @override
-  State<AppRootPage> createState() => _AppRootPageState();
-}
 
-class _AppRootPageState extends State<AppRootPage> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Stack(
-      children: const [MenuPage(), HomePage()],
+      children: [const HomePage(), MenuPage()],
     );
   }
 }
@@ -32,7 +29,8 @@ class HomePage extends ConsumerWidget {
     var size = MediaQuery.of(context).size;
     var items = Product.getProducts();
     final isDark = ref.watch(Controller.themControllerProvider);
-
+   // final menuNotifier = ref.watch(Controller.menuProvider.notifier);
+    
     return Scaffold(
         body: CustomScrollView(
       slivers: [
@@ -43,10 +41,17 @@ class HomePage extends ConsumerWidget {
               statusBarColor: Colors.white),
           toolbarHeight: 100,
           backgroundColor: !isDark ? Colors.white : Colors.grey.shade800,
-          leading: const Icon(
-            Icons.menu,
-            color: Colors.grey,
-          ),
+          leading: IconButton(
+              onPressed: () {
+                // menuNotifier.open();
+                //print(menuNotifier.state);
+                ref.read(Controller.menuControllerProvider.notifier).state =
+                    700;
+              },
+              icon: const Icon(
+                Icons.menu,
+                color: Colors.grey,
+              )),
           actions: [
             IconButton(
                 onPressed: () {
@@ -170,26 +175,26 @@ class HomePage extends ConsumerWidget {
                 ref.read(Controller.categorySwitchProvider.notifier).state =
                     true;
               }),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
-          CategoryTile(
+          const CategoryTile(
             icon: FontAwesomeIcons.pizzaSlice,
             category: "Pizza",
             clicked: false,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
-          CategoryTile(
+          const CategoryTile(
             icon: FontAwesomeIcons.bowlFood,
             category: "Bowls",
             clicked: false,
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
-          CategoryTile(
+          const CategoryTile(
             icon: FontAwesomeIcons.cookie,
             category: "Bevareges",
             clicked: false,

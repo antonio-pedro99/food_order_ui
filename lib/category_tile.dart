@@ -31,14 +31,14 @@ class CategoryTile extends StatelessWidget {
                 child: Icon(
                   icon,
                   size: 25,
-                  color: clicked! ? Colors.white : Colors.grey,
+                  color: clicked! ? Colors.white : Colors.grey.shade400,
                 ),
               ),
             ),
             Text(
               "$category",
               style: TextStyle(
-                  color: clicked! ? Colors.red.shade300 : Colors.grey,
+                  color: clicked! ? Colors.red.shade300 : Colors.grey.shade400,
                   fontWeight: clicked! ? FontWeight.bold : FontWeight.normal),
             )
           ],
