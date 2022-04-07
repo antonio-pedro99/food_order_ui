@@ -120,7 +120,7 @@ class HomePage extends ConsumerWidget {
                                       BorderRadius.all(Radius.circular(8)))),
                         ),
                         const SizedBox(height: 25),
-                        _buildCategoryQueue(),
+                        _buildCategoryQueue(ref),
                         const SizedBox(height: 25),
                         Expanded(
                             flex: 0,
@@ -143,25 +143,33 @@ class HomePage extends ConsumerWidget {
     ));
   }
 
-  Widget _buildCategoryQueue() {
+  Widget _buildCategoryQueue(WidgetRef ref) {
+    final value = ref.watch(Controller.categorySwitchProvider);
+    bool aux = false;
     return SizedBox(
       height: 110,
       child: ListView(
         scrollDirection: Axis.horizontal,
-        children: const [
+        children: [
           CategoryTile(
             icon: FontAwesomeIcons.burger,
             category: "Burger",
-            clicked: true,
+            clicked: value ? value : aux,
+            onClicked: () {
+              ref.read(Controller.categorySwitchProvider.notifier).state = true;
+            },
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           CategoryTile(
-            icon: FontAwesomeIcons.mugSaucer,
-            category: "Coffe",
-            clicked: false,
-          ),
+              icon: FontAwesomeIcons.mugSaucer,
+              category: "Coffe",
+              clicked: !value ? value : aux,
+              onClicked: () {
+                ref.read(Controller.categorySwitchProvider.notifier).state =
+                    true;
+              }),
           SizedBox(
             width: 10,
           ),
