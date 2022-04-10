@@ -1,8 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Controller {
-  static final themControllerProvider = StateProvider((ref) => false);
-
   static final menuControllerProvider = StateProvider<double?>((ref) => 0);
 
   static final menuProvider = StateNotifierProvider((_) => MenuController(0));
@@ -15,7 +13,6 @@ class MenuController extends StateNotifier<double> {
 
   void open() {
     state = 700;
-  
   }
 
   void close() {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:food_order_ui/controller.dart';
+import 'package:food_order_ui/controllers/controller.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class MenuPage extends HookConsumerWidget {
@@ -28,15 +28,15 @@ class MenuPage extends HookConsumerWidget {
                 shadowColor: Colors.grey.shade200,
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(25),
-                        topRight: Radius.circular(25),
-                        bottomLeft: Radius.circular(25))),
+                  bottomRight: Radius.circular(25),
+                  topRight: Radius.circular(25),
+                )),
                 child: Container(
-                    padding: const EdgeInsets.fromLTRB(20, 90, 20, 20),
+                    padding: const EdgeInsets.fromLTRB(20, 90, 20, 40),
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     height: size,
-                    width: size,
+                    width: size! / 3,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,

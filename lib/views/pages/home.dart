@@ -1,25 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:food_order_ui/category_tile.dart';
-import 'package:food_order_ui/menu.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:food_order_ui/product.dart';
-import 'package:food_order_ui/product_tile.dart';
+import 'package:food_order_ui/views/pages/product_details.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'controller.dart';
-
-class AppRootPage extends HookConsumerWidget {
-  const AppRootPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Stack(
-      children: [const HomePage(), MenuPage()],
-    );
-  }
-}
+import '../../controllers/controller.dart';
+import '../../models/product.dart';
+import '../elements/category_tile.dart';
+import '../elements/product_tile.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -28,38 +15,27 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var size = MediaQuery.of(context).size;
     var items = Product.getProducts();
-    final isDark = ref.watch(Controller.themControllerProvider);
-   // final menuNotifier = ref.watch(Controller.menuProvider.notifier);
-    
+
+    // final menuNotifier = ref.watch(Controller.menuProvider.notifier);
+
     return Scaffold(
         body: CustomScrollView(
       slivers: [
         SliverAppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarBrightness: Brightness.dark,
-              statusBarIconBrightness: Brightness.dark,
-              statusBarColor: Colors.white),
           toolbarHeight: 100,
-          backgroundColor: !isDark ? Colors.white : Colors.grey.shade800,
           leading: IconButton(
               onPressed: () {
-                // menuNotifier.open();
-                //print(menuNotifier.state);
                 ref.read(Controller.menuControllerProvider.notifier).state =
                     700;
               },
               icon: const Icon(
                 Icons.menu,
-                color: Colors.grey,
               )),
           actions: [
             IconButton(
-                onPressed: () {
-                  ref.read(Controller.themControllerProvider.notifier).state =
-                      !isDark ? true : false;
-                },
-                icon: Icon(
-                  !isDark ? Icons.dark_mode : Icons.sunny,
+                onPressed: () {},
+                icon: const Icon(
+                  FontAwesomeIcons.bagShopping,
                   color: Colors.grey,
                 ))
           ],
@@ -136,7 +112,21 @@ class HomePage extends ConsumerWidget {
                                 //shrinkWrap: true,
                                 itemCount: items.length,
                                 itemBuilder: (context, index) {
-                                  return ProductTile(product: items[index]);
+                                  return GestureDetector(
+                                    child: ProductTile(product: items[index]),
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          PageRouteBuilder(pageBuilder:
+                                              ((context, animation,
+                                                  secondaryAnimation) {
+                                        return FadeTransition(
+                                            opacity: animation,
+                                            child: ProductDetails(
+                                              product: items[index],
+                                            ));
+                                      })));
+                                    },
+                                  );
                                 },
                               ),
                             ))

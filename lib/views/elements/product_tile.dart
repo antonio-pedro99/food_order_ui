@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_order_ui/product.dart';
+import 'package:food_order_ui/models/product.dart';
 
 class ProductTile extends StatelessWidget {
   const ProductTile({Key? key, this.product}) : super(key: key);
@@ -70,12 +70,14 @@ class ProductTile extends StatelessWidget {
         ),
         Align(
           alignment: Alignment.centerLeft,
-          child: Image.network(
-            "${product!.imageUrl}",
-            fit: BoxFit.fitWidth,
-            height: 190,
-            width: 190,
-          ),
+          child: Hero(
+              tag: product!.name!,
+              child: Image.network(
+                "${product!.imageUrl}",
+                fit: BoxFit.fitWidth,
+                height: 190,
+                width: 190,
+              )),
         )
       ],
     );
