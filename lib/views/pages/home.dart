@@ -4,7 +4,7 @@ import 'package:food_order_ui/views/pages/product_details.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../controllers/controller.dart';
-import '../../models/product.dart';
+import '../../models/products_provider.dart';
 import '../elements/category_tile.dart';
 import '../elements/product_tile.dart';
 
@@ -14,7 +14,7 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var size = MediaQuery.of(context).size;
-    var items = Product.getProducts();
+    var getProducts = GetProducts();
 
     // final menuNotifier = ref.watch(Controller.menuProvider.notifier);
 
@@ -110,10 +110,22 @@ class HomePage extends ConsumerWidget {
                               child: ListView.builder(
                                 scrollDirection: Axis.vertical,
                                 //shrinkWrap: true,
-                                itemCount: items.length,
+                                itemCount: getProducts().length,
                                 itemBuilder: (context, index) {
                                   return GestureDetector(
-                                    child: ProductTile(product: items[index]),
+                                    child: AnimatedSwitcher(
+                                      switchInCurve: Curves.bounceIn,
+                                      transitionBuilder: (child, animation) {
+                                        return SizeTransition(
+                                          child: child,
+                                          sizeFactor: animation,
+                                        );
+                                      },
+                                      switchOutCurve: Curves.bounceOut,
+                                      duration: const Duration(seconds: 3),
+                                      child: ProductTile(
+                                          product: getProducts()[index]),
+                                    ),
                                     onTap: () {
                                       Navigator.of(context).push(
                                           PageRouteBuilder(pageBuilder:
@@ -122,7 +134,7 @@ class HomePage extends ConsumerWidget {
                                         return FadeTransition(
                                             opacity: animation,
                                             child: ProductDetails(
-                                              product: items[index],
+                                              product: getProducts()[index],
                                             ));
                                       })));
                                     },
