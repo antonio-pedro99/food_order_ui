@@ -1,4 +1,4 @@
-package com.example.food_order_ui
+package antdev99.food_order_ui
 
 import io.flutter.embedding.android.FlutterActivity
 
