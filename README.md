@@ -16,6 +16,9 @@ Food Order App UI based on Tonmoy Sarkar design on Dribble
 
 ![image](https://user-images.githubusercontent.com/42675180/162413027-35c872d6-3f7a-45f1-a174-d7dad623c40c.png)
 
+4. Product Details
+
+![image](https://user-images.githubusercontent.com/42675180/162625540-8051e874-8f0c-4a08-8ff8-f91ab699a95c.png)
 
 4. Product Detals
 
